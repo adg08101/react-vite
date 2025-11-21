@@ -1,11 +1,7 @@
-export default function MyButton(props) {
+export default function MyButton({ counter, onClick }) {
   return (
     <>
-      <button
-        onClick={props.onClickFunction}
-      >
-        <spam>My Button</spam>
-      </button>
+      <button onClick={onClick}>The sum is: {counter}</button>
     </>
   );
 }
