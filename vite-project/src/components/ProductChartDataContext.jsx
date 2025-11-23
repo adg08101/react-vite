@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
 
-export default function ProductListDataContext({ onBuy }) {
-  const { products, setProducts, buyAction } = useContext(DataContext);
+export default function ProductChartDataContext({ onBuy }) {
+  const { productsChart, setProductsChart, removeAction } =
+    useContext(DataContext);
 
   return (
     <>
-      <h2>Product List Data Context</h2>
-      {products.map((p) => (
+      <h2>Product Chart Data Context</h2>
+      {productsChart.map((p) => (
         <div
-          key={`list${p.name}`}
+          key={`chart${p.name}`}
           style={{
             padding: "16px",
             borderRadius: "12px",
@@ -21,17 +22,17 @@ export default function ProductListDataContext({ onBuy }) {
           <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>${p.price}</p>
 
           <button
-            onClick={() => buyAction(p)}
+            onClick={() => removeAction(p)}
             style={{
               padding: "8px 12px",
-              background: "#007bff",
+              background: "#FF0000",
               color: "black",
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
             }}
           >
-            Buy
+            Remove
           </button>
         </div>
       ))}
