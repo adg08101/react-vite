@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Product({ product, onBuy }) {
+export default function ProductChart({ product, onRemove }) {
   return (
     <div
       style={{
@@ -14,17 +14,17 @@ export default function Product({ product, onBuy }) {
       <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>${product.price}</p>
 
       <button
-        onClick={() => onBuy(product)}
+        onClick={() => onRemove(product)}
         style={{
           padding: "8px 12px",
-          background: "#007bff",
+          background: "#FF0000",
           color: "black",
           border: "none",
           borderRadius: "8px",
           cursor: "pointer",
         }}
       >
-        Buy
+        Remove
       </button>
     </div>
   );

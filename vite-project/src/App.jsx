@@ -1,13 +1,15 @@
-import { useState, useEffect, useCallback } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useEffect, useCallback, useContext } from "react";
+// import reactLogo from "./assets/react.svg";
+// import viteLogo from "/vite.svg";
 import "./App.css";
 import MyButton from "./components/MyButton";
-import ClassComponent from "./components/ClassComponent";
+// import ClassComponent from "./components/ClassComponent";
 import FunctionComponent from "./components/FunctionComponent";
 import Header from "./components/Header";
 import Form from "./components/Form";
-import Product from "./components/Product";
+import ProductList from "./components/ProductList";
+import ProductChart from "./components/ProductChart";
+import { DataContext } from "./contexts/DataContext";
 
 function App() {
   const [text, setText] = useState("");
@@ -30,14 +32,17 @@ function App() {
     alert(`Please give me the ${e.target.id}: ${e.target.value}`);
   };
 
-  const callback = useCallback(
-    (data) => {
-      setText(data);
-    },
-    [text]
-  );
+  const callback = useCallback((data) => {
+    setText(data);
+  }, []);
+
+  // const { greet, setGreet } = useContext(DataContext);
 
   const [products, setProducts] = useState([]);
+
+  const [productsChart, setProductsChart] = useState([]);
+
+  const [productsBackup, setProductsBackup] = useState(products);
 
   useEffect(() => {
     fetch("./data/products.json")
@@ -48,30 +53,21 @@ function App() {
       .catch((err) => console.error("Error loading products:", err));
   }, []);
 
-  /* const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Laptop",
-      price: 1200,
-    },
-    {
-      id: 2,
-      name: "Wireless Mouse",
-      price: 25,
-    },
-    {
-      id: 3,
-      name: "Keyboard",
-      price: 45,
-    },
-    {
-      id: 4,
-      name: "Laptop personal",
-      price: 1200,
-    },
-  ]); */
+  const buyAction = (item) => {
+    alert(`Buying ${item.name} for $${item.price}`);
 
-  const [productsBackup, setProductsBackup] = useState(products);
+    const buyChart = [...productsChart, item];
+    setProductsChart(buyChart);
+  };
+
+  const removeAction = (item) => {
+    alert(`Removing ${item.name} for $${item.price}`);
+
+    const buyChart = productsChart.filter((i) => i.name != item.name);
+    console.log(buyChart);
+
+    setProductsChart(buyChart);
+  };
 
   return (
     // Always use single fragment label
@@ -92,15 +88,41 @@ function App() {
             {products.map(
               (item) =>
                 item.id > 0 && (
-                  <Product
-                    key={item.id}
+                  <ProductList
+                    key={`list${item.id}`}
                     product={item}
-                    onBuy={(p) => alert(`Buying ${p.name} for $${p.price}`)}
+                    onBuy={(item) => buyAction(item)}
                   />
                 )
             )}
           </div>
         )}
+
+        <h2>Product Chart</h2>
+
+        {productsChart.length === 0 ? (
+          <p>No product on chart :s</p>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "16px",
+            }}
+          >
+            {productsChart.map(
+              (item) =>
+                item.id > 0 && (
+                  <ProductChart
+                    key={`chart${item.id}`}
+                    product={item}
+                    onRemove={(item) => removeAction(item)}
+                  />
+                )
+            )}
+          </div>
+        )}
+
         <MyButton
           counter={products.length}
           onClick={() => {
