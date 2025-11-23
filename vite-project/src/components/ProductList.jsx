@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../contexts/DataContext";
 
 export default function ProductList({ product, onBuy }) {
+  const { products, setProducts } = useContext(DataContext);
+
   return (
     <div
       style={{
