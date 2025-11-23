@@ -37,7 +37,18 @@ function App() {
     [text]
   );
 
-  const [products, setProducts] = useState([
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("./data/products.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((err) => console.error("Error loading products:", err));
+  }, []);
+
+  /* const [products, setProducts] = useState([
     {
       id: 1,
       name: "Laptop",
@@ -58,7 +69,7 @@ function App() {
       name: "Laptop personal",
       price: 1200,
     },
-  ]);
+  ]); */
 
   const [productsBackup, setProductsBackup] = useState(products);
 
@@ -93,6 +104,10 @@ function App() {
         <MyButton
           counter={products.length}
           onClick={() => {
+            const updatedProducts = products;
+            setProducts(updatedProducts);
+            setProductsBackup(updatedProducts);
+
             products.length != 0
               ? setProducts([])
               : setProducts(productsBackup);
