@@ -10,6 +10,7 @@ import Form from "./components/Form";
 import ProductList from "./components/ProductList";
 import ProductChart from "./components/ProductChart";
 import { DataProvider } from "./contexts/DataContext";
+import ProductListDataContext from "./components/ProductListDataContext";
 
 function App() {
   const [text, setText] = useState("");
@@ -72,7 +73,11 @@ function App() {
     <>
       <div style={{ padding: "20px" }}>
         <DataProvider>
-          <h2>Product List</h2>
+          <ProductListDataContext
+            onBuy={(item) => buyAction(item)}
+          ></ProductListDataContext>
+
+          {/* <h2>Product List</h2>
 
           {products.length === 0 ? (
             <p>No product on list :s</p>
@@ -95,7 +100,7 @@ function App() {
                   )
               )}
             </div>
-          )}
+                  )} */}
 
           <h2>Product Chart</h2>
 
