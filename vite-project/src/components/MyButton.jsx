@@ -1,7 +1,9 @@
-export default function MyButton({ counter, onClick }) {
+export default function MyButton({ counter, onClick, operation }) {
   return (
     <>
-      <button onClick={onClick}>The sum is: {counter}</button>
+      <button id={operation} onClick={onClick} value={String(counter)}>
+        The {operation} is: {counter}
+      </button>
     </>
   );
 }
