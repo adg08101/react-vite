@@ -11,6 +11,7 @@ import ProductList from "./components/ProductList";
 import ProductChart from "./components/ProductChart";
 import { DataProvider } from "./contexts/DataContext";
 import ProductListDataContext from "./components/ProductListDataContext";
+import ProductChartDataContext from "./components/ProductChartDataContext";
 
 function App() {
   const [text, setText] = useState("");
@@ -37,37 +38,6 @@ function App() {
     setText(data);
   }, []);
 
-  const [products, setProducts] = useState([]);
-
-  const [productsChart, setProductsChart] = useState([]);
-
-  const [productsBackup, setProductsBackup] = useState(products);
-
-  useEffect(() => {
-    fetch("./data/products.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-      })
-      .catch((err) => console.error("Error loading products:", err));
-  }, []);
-
-  const buyAction = (item) => {
-    alert(`Buying ${item.name} for $${item.price}`);
-
-    const buyChart = [...productsChart, item];
-    setProductsChart(buyChart);
-  };
-
-  const removeAction = (item) => {
-    alert(`Removing ${item.name} for $${item.price}`);
-
-    const buyChart = productsChart.filter((i) => i.name != item.name);
-    console.log(buyChart);
-
-    setProductsChart(buyChart);
-  };
-
   return (
     // Always use single fragment label
     <>
@@ -76,6 +46,10 @@ function App() {
           <ProductListDataContext
             onBuy={(item) => buyAction(item)}
           ></ProductListDataContext>
+
+          <ProductChartDataContext
+            onBuy={(item) => buyAction(item)}
+          ></ProductChartDataContext>
 
           {/* <h2>Product List</h2>
 
@@ -102,7 +76,7 @@ function App() {
             </div>
                   )} */}
 
-          <h2>Product Chart</h2>
+          {/* <h2>Product Chart</h2>
 
           {productsChart.length === 0 ? (
             <p>No product on chart :s</p>
@@ -125,9 +99,9 @@ function App() {
                   )
               )}
             </div>
-          )}
+                  )} */}
         </DataProvider>
-        <MyButton
+        {/* <MyButton
           counter={products.length}
           onClick={() => {
             const updatedProducts = products;
@@ -154,7 +128,7 @@ function App() {
             setProductsBackup(updatedProducts);
           }}
           operation="Products add operations"
-        ></MyButton>
+        ></MyButton> */}
       </div>
       <Header text={`Callback from: ${text}`}></Header>
       <MyButton
