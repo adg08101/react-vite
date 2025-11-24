@@ -1,14 +1,9 @@
-import { useState, useEffect, useCallback, useContext } from "react";
-// import reactLogo from "./assets/react.svg";
-// import viteLogo from "/vite.svg";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import MyButton from "./components/MyButton";
-// import ClassComponent from "./components/ClassComponent";
 import FunctionComponent from "./components/FunctionComponent";
 import Header from "./components/Header";
 import Form from "./components/Form";
-import ProductList from "./components/ProductList";
-import ProductChart from "./components/ProductChart";
 import { DataProvider } from "./contexts/DataContext";
 import ProductListDataContext from "./components/ProductListDataContext";
 import ProductChartDataContext from "./components/ProductChartDataContext";
@@ -41,95 +36,12 @@ function App() {
   return (
     // Always use single fragment label
     <>
-      <div style={{ padding: "20px" }}>
-        <DataProvider>
-          <ProductListDataContext
-            onBuy={(item) => buyAction(item)}
-          ></ProductListDataContext>
+      <DataProvider>
+        <ProductListDataContext></ProductListDataContext>
 
-          <ProductChartDataContext
-            onBuy={(item) => buyAction(item)}
-          ></ProductChartDataContext>
+        <ProductChartDataContext></ProductChartDataContext>
+      </DataProvider>
 
-          {/* <h2>Product List</h2>
-
-          {products.length === 0 ? (
-            <p>No product on list :s</p>
-          ) : (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "16px",
-              }}
-            >
-              {products.map(
-                (item) =>
-                  item.id > 0 && (
-                    <ProductList
-                      key={`list${item.id}`}
-                      product={item}
-                      onBuy={(item) => buyAction(item)}
-                    />
-                  )
-              )}
-            </div>
-                  )} */}
-
-          {/* <h2>Product Chart</h2>
-
-          {productsChart.length === 0 ? (
-            <p>No product on chart :s</p>
-          ) : (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "16px",
-              }}
-            >
-              {productsChart.map(
-                (item) =>
-                  item.id > 0 && (
-                    <ProductChart
-                      key={`chart${item.id}`}
-                      product={item}
-                      onRemove={(item) => removeAction(item)}
-                    />
-                  )
-              )}
-            </div>
-                  )} */}
-        </DataProvider>
-        {/* <MyButton
-          counter={products.length}
-          onClick={() => {
-            const updatedProducts = products;
-            setProducts(updatedProducts);
-            setProductsBackup(updatedProducts);
-
-            products.length != 0
-              ? setProducts([])
-              : setProducts(productsBackup);
-          }}
-          operation="Products operations"
-        ></MyButton>
-        <MyButton
-          counter={products.length}
-          onClick={() => {
-            const newProduct = {
-              id: products.length + 1,
-              name: "Bread",
-              price: 20,
-            };
-
-            const updatedProducts = [...products, newProduct];
-            setProducts(updatedProducts);
-            setProductsBackup(updatedProducts);
-          }}
-          operation="Products add operations"
-        ></MyButton> */}
-      </div>
       <Header text={`Callback from: ${text}`}></Header>
       <MyButton
         counter={countSum}
