@@ -1,5 +1,4 @@
 import React from "react";
-import { DataContext } from "../contexts/DataContext";
 
 export default function ProductChart({ product, onRemove }) {
   return (

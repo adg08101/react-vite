@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
 
-export default function ProductChartDataContext({ onBuy }) {
+export default function ProductChartDataContext() {
   const { productsChart, totalMoneyOnChart, removeAction } =
     useContext(DataContext);
 
