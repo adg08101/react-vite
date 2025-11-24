@@ -107,7 +107,7 @@ export const DataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetch(".././data/products.json")
+    fetch(".././react-vite/data/products.json")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
