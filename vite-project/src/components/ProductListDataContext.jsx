@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
+import { Link } from "react-router-dom";
 
 export default function ProductList() {
   const { products, buyAction, addItemAction, removeItemAction } =
@@ -27,7 +28,9 @@ export default function ProductList() {
                   borderRadius: "8px",
                 }}
               >
-                <strong>{p.name}</strong>
+                <Link to={`/product/${p.id}`}>
+                  <strong>{p.name}</strong>
+                </Link>
                 <p>Price: ${p.price}</p>
                 <p>Stock: {p.stock}</p>
                 <button onClick={() => buyAction(p)}>Buy</button>{" "}

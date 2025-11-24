@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./css/Form.css";
 
 export default function Form() {
+  const navigate = useNavigate();
+
   const formDefaultState = {
     user: "",
     email: "",
     password: "",
   };
+
   const formErrorDefaultState = {
     userError: "",
     emailError: "",
@@ -26,15 +31,13 @@ export default function Form() {
       }
     }
 
-    // Update errors
     setFormError(newErrors);
 
-    // If any error exists, stop the submit
     const hasErrors = Object.values(newErrors).some((err) => err.length > 0);
-
     if (hasErrors) return;
 
     console.log("Valid form:", form);
+    navigate("/shopping");
   };
 
   const handleReset = () => {
@@ -45,128 +48,71 @@ export default function Form() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setForm((p) => ({
-      ...p,
+    setForm((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const handActivation = (e) => {
-    const message = "activated";
-    e.stopPropagation();
-    console.log(`${e.target} ${message}`);
-  };
-
   return (
-    <div
-      onClick={handActivation}
-      className="p-6 max-w-sm mx-auto"
-      style={{
-        padding: "1.5rem",
-        maxWidth: "400px",
-        margin: "0 auto",
-        border: "1px solid #ccc",
-        borderRadius: "10px",
-        marginTop: "5%",
-      }}
-    >
-      <h1 className="text-2xl font-bold mb-4">Login Form</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4"
-        onClick={handActivation}
-      >
-        <input
-          type="text"
-          placeholder="Username"
-          className="border p-2 rounded"
-          value={form.user}
-          name="user"
-          onChange={(e) => {
-            handleChange(e);
-          }}
-          style={{
-            width: "100%",
-            height: "25px",
-          }}
-        />
-        <br></br>
-        {formError.userError && (
-          <span
-            style={{
-              color: "red",
-            }}
-          >
-            {formError.userError}
-          </span>
-        )}
-        <br></br>
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2 rounded"
-          value={form.email}
-          name="email"
-          onChange={(e) => {
-            handleChange(e);
-          }}
-          style={{
-            width: "100%",
-            height: "25px",
-          }}
-          onClick={handActivation}
-          autoComplete="current-username"
-        />
-        <br></br>
-        {formError.emailError && (
-          <span
-            style={{
-              color: "red",
-            }}
-          >
-            {formError.emailError}
-          </span>
-        )}
-        <br></br>
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-2 rounded"
-          value={form.password}
-          name="password"
-          onChange={(e) => {
-            handleChange(e);
-          }}
-          style={{
-            width: "100%",
-            height: "25px",
-          }}
-          autoComplete="current-password"
-        />
-        <br></br>
-        {formError.passwordError && (
-          <span
-            style={{
-              color: "red",
-            }}
-          >
-            {formError.passwordError}
-          </span>
-        )}
-        <br></br>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-        >
-          Send
-        </button>
-        <button
-          type="reset"
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-          onClick={handleReset}
-        >
-          Cancel
-        </button>
+    <div className="form-container" onClick={() => console.log("activated")}>
+      <h1 className="form-title">Login Form</h1>
+
+      <form className="form" onSubmit={handleSubmit}>
+        {/* Username */}
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Username"
+            name="user"
+            value={form.user}
+            onChange={handleChange}
+            autoComplete="username"
+          />
+          {formError.userError && (
+            <span className="error">{formError.userError}</span>
+          )}
+        </div>
+
+        {/* Email */}
+        <div className="form-group">
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            autoComplete="email"
+          />
+          {formError.emailError && (
+            <span className="error">{formError.emailError}</span>
+          )}
+        </div>
+
+        {/* Password */}
+        <div className="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            autoComplete="current-password"
+          />
+          {formError.passwordError && (
+            <span className="error">{formError.passwordError}</span>
+          )}
+        </div>
+
+        {/* Buttons */}
+        <div className="button-row">
+          <button type="submit" className="btn primary">
+            Send
+          </button>
+          <button type="button" className="btn secondary" onClick={handleReset}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
