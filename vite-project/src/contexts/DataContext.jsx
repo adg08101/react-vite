@@ -11,10 +11,48 @@ export const DataProvider = ({ children }) => {
   const [productsBackup, setProductsBackup] = useState(products);
 
   const buyAction = (item) => {
-    alert(`Buying ${item.name} for $${item.price}`);
+    if (item.quantity > 0) {
+      alert(`Buying ${item.name} for $${item.price}`);
 
-    const buyChart = [...productsChart, item];
+      const buyChart = [...productsChart, item];
+      setProductsChart(buyChart);
+
+      setProducts((prevProducts) =>
+        prevProducts.map((p) => {
+          if (p.id === item.id) {
+            return {
+              ...p,
+              onList: !p.onList,
+            };
+          }
+
+          return p;
+        })
+      );
+    } else {
+      alert("Choose a quantity greater than 0");
+    }
+  };
+
+  const removeAction = (item) => {
+    alert(`Removing ${item.name} for $${item.price}`);
+    const buyChart = productsChart.filter((i) => i.name != item.name);
     setProductsChart(buyChart);
+
+    setProducts((prevProducts) =>
+      prevProducts.map((p) => {
+        if (p.id === item.id) {
+          return {
+            ...p,
+            quantity: 0,
+            stock: p.quantity + p.stock,
+            onList: !p.onList,
+          };
+        }
+
+        return p;
+      })
+    );
   };
 
   const addItemAction = (item) => {
@@ -59,6 +97,15 @@ export const DataProvider = ({ children }) => {
     );
   };
 
+  const totalMoneyOnChart = () => {
+    let totalMoney = 0;
+    productsChart.map((p) => {
+      totalMoney += p.quantity * p.price;
+    });
+
+    return totalMoney;
+  };
+
   useEffect(() => {
     fetch("./data/products.json")
       .then((res) => res.json())
@@ -78,8 +125,10 @@ export const DataProvider = ({ children }) => {
         productsBackup,
         setProductsBackup,
         buyAction,
+        removeAction,
         addItemAction,
         removeItemAction,
+        totalMoneyOnChart,
       }}
     >
       {children}

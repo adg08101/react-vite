@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
 
 export default function ProductChartDataContext({ onBuy }) {
-  const { productsChart, setProductsChart, removeItemAction } =
+  const { productsChart, totalMoneyOnChart, removeAction } =
     useContext(DataContext);
 
   return (
@@ -21,8 +21,15 @@ export default function ProductChartDataContext({ onBuy }) {
           <h3 style={{ margin: "0 0 8px" }}>{p.name}</h3>
           <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>${p.price}</p>
 
+          <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>
+            Quantity: {p.quantity}
+          </p>
+          <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>
+            Total price: ${p.quantity * p.price}
+          </p>
+
           <button
-            onClick={() => removeItemAction(p)}
+            onClick={() => removeAction(p)}
             style={{
               padding: "8px 12px",
               background: "#FF0000",
@@ -36,6 +43,9 @@ export default function ProductChartDataContext({ onBuy }) {
           </button>
         </div>
       ))}
+      <p>
+        <strong>Total money on chart: ${totalMoneyOnChart()}</strong>
+      </p>
     </>
   );
 }
