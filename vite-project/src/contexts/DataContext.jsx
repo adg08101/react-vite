@@ -17,13 +17,46 @@ export const DataProvider = ({ children }) => {
     setProductsChart(buyChart);
   };
 
-  const removeAction = (item) => {
-    alert(`Removing ${item.name} for $${item.price}`);
+  const addItemAction = (item) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((p) => {
+        if (p.id === item.id) {
+          if (p.stock <= 0) {
+            alert(`No stock available for ${p.name}`);
+            return p;
+          }
 
-    const buyChart = productsChart.filter((i) => i.name != item.name);
-    console.log(buyChart);
+          return {
+            ...p,
+            quantity: p.quantity + 1,
+            stock: p.stock - 1,
+          };
+        }
 
-    setProductsChart(buyChart);
+        return p;
+      })
+    );
+  };
+
+  const removeItemAction = (item) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((p) => {
+        if (p.id === item.id) {
+          if (p.quantity <= 0) {
+            alert(`No more items of ${p.name} to remove`);
+            return p;
+          }
+
+          return {
+            ...p,
+            quantity: p.quantity - 1,
+            stock: p.stock + 1,
+          };
+        }
+
+        return p;
+      })
+    );
   };
 
   useEffect(() => {
@@ -45,7 +78,8 @@ export const DataProvider = ({ children }) => {
         productsBackup,
         setProductsBackup,
         buyAction,
-        removeAction,
+        addItemAction,
+        removeItemAction,
       }}
     >
       {children}

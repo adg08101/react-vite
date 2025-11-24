@@ -1,40 +1,43 @@
 import React, { useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
 
-export default function ProductListDataContext({ onBuy }) {
-  const { products, setProducts, buyAction } = useContext(DataContext);
+export default function ProductList() {
+  const { products, buyAction, addItemAction, removeItemAction } =
+    useContext(DataContext);
 
   return (
     <>
       <h2>Product List Data Context</h2>
-      {products.map((p) => (
-        <div
-          key={`list${p.name}`}
-          style={{
-            padding: "16px",
-            borderRadius: "12px",
-            border: "1px solid #ddd",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h3 style={{ margin: "0 0 8px" }}>{p.name}</h3>
-          <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>${p.price}</p>
-
-          <button
-            onClick={() => buyAction(p)}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "15px",
+          padding: "20px",
+        }}
+      >
+        {products.map((p) => (
+          <div
+            key={p.id}
             style={{
-              padding: "8px 12px",
-              background: "#007bff",
-              color: "black",
-              border: "none",
+              padding: "10px",
+              border: "1px solid #ccc",
               borderRadius: "8px",
-              cursor: "pointer",
             }}
           >
-            Buy
-          </button>
-        </div>
-      ))}
+            <strong>{p.name}</strong>
+            <p>Price: ${p.price}</p>
+            <p>Stock: {p.stock}</p>
+            <button onClick={() => buyAction(p)}>Buy</button>{" "}
+            <button onClick={() => addItemAction(p)}>+</button>{" "}
+            <span>
+              {" "}
+              <strong>{p.quantity}</strong>{" "}
+            </span>{" "}
+            <button onClick={() => removeItemAction(p)}>-</button>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

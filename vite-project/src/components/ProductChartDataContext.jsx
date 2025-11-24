@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../contexts/DataContext";
 
 export default function ProductChartDataContext({ onBuy }) {
-  const { productsChart, setProductsChart, removeAction } =
+  const { productsChart, setProductsChart, removeItemAction } =
     useContext(DataContext);
 
   return (
@@ -22,7 +22,7 @@ export default function ProductChartDataContext({ onBuy }) {
           <p style={{ margin: "0 0 12px", fontWeight: "bold" }}>${p.price}</p>
 
           <button
-            onClick={() => removeAction(p)}
+            onClick={() => removeItemAction(p)}
             style={{
               padding: "8px 12px",
               background: "#FF0000",
