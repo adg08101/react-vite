@@ -82,4 +82,26 @@
   .btn.secondary:hover {
     opacity: 0.9;
   }
+  .country-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  /* Hover */
+  .country-select:hover {
+    border-color: #888;
+  }
+  
+  /* When focused */
+  .country-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+  }
   

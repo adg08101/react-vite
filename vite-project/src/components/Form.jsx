@@ -9,12 +9,14 @@ export default function Form() {
     user: "",
     email: "",
     password: "",
+    country: "",
   };
 
   const formErrorDefaultState = {
     userError: "",
     emailError: "",
     passwordError: "",
+    countryError: "",
   };
 
   const [form, setForm] = useState(formDefaultState);
@@ -55,7 +57,7 @@ export default function Form() {
   };
 
   return (
-    <div className="form-container" onClick={() => console.log("activated")}>
+    <div className="form-container">
       <h1 className="form-title">Login Form</h1>
 
       <form className="form" onSubmit={handleSubmit}>
@@ -104,6 +106,26 @@ export default function Form() {
           )}
         </div>
 
+        {/* Country Select */}
+        <div className="form-group">
+          <select
+            name="country"
+            value={form.country}
+            onChange={handleChange}
+            className="country-select"
+          >
+            <option value="">Select your country</option>
+            {countries.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          {formError.countryError && (
+            <span className="error">{formError.countryError}</span>
+          )}
+        </div>
+
         {/* Buttons */}
         <div className="button-row">
           <button type="submit" className="btn primary">
@@ -117,3 +139,16 @@ export default function Form() {
     </div>
   );
 }
+
+/* Full Country List */
+const countries = [
+  "Argentina", "Australia", "Austria", "Belgium", "Bolivia", "Brazil", "Canada",
+  "Chile", "China", "Colombia", "Costa Rica", "Cuba", "Denmark", "Dominican Republic",
+  "Ecuador", "Egypt", "El Salvador", "Finland", "France", "Germany", "Greece",
+  "Guatemala", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia",
+  "Ireland", "Israel", "Italy", "Japan", "Kenya", "Luxembourg", "Mexico",
+  "Netherlands", "New Zealand", "Nicaragua", "Norway", "Panama", "Paraguay",
+  "Peru", "Poland", "Portugal", "Romania", "Russia", "South Africa", "South Korea",
+  "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom",
+  "United States", "Uruguay", "Venezuela"
+];
